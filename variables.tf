@@ -214,3 +214,14 @@ variable "assign_public_ip" {
   description = "Whether to assign a public IP address to the ECS tasks. Set to true when using public subnets."
   default     = false
 }
+
+variable "cpu_architecture" {
+  type        = string
+  description = "CPU architecture for the agent tasks. ARM64 (Graviton) offers ~20% cost savings over X86_64. Valid values: X86_64, ARM64."
+  default     = "X86_64"
+
+  validation {
+    condition     = contains(["X86_64", "ARM64"], var.cpu_architecture)
+    error_message = "cpu_architecture must be either X86_64 or ARM64."
+  }
+}

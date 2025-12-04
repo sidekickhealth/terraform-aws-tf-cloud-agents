@@ -8,6 +8,16 @@ output "agent_pool_id" {
   value       = try(tfe_agent_pool.ecs_agent_pool[0].id, null)
 }
 
+output "ecs_cluster_name" {
+  description = "Name of the ECS cluster running the agents."
+  value       = var.create_ecs_cluster ? module.ecs_cluster[0].cluster_name : split("/", var.ecs_cluster_arn)[1]
+}
+
+output "ecs_service_name" {
+  description = "Name of the ECS service."
+  value       = aws_ecs_service.hcp_terraform_agent.name
+}
+
 output "ecs_service_arn" {
   description = "ARN of the ECS service."
   value       = aws_ecs_service.hcp_terraform_agent.id
